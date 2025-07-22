@@ -51,12 +51,12 @@ class Linked_List_Seq:
         new_node = Linked_List_Node(x)
         node = self.head.later_node(i - 1)
         new_node.next = node.next
-        node.next = new_node.next
+        node.next = new_node
         self.size += 1
 
     def delete_at(self, i):
         if i == 0:
-            return self.delete_first(i)
+            return self.delete_first()
         node = self.head.later_node(i - 1)
         x = node.next.item
         node.next = node.next.next
@@ -67,3 +67,32 @@ class Linked_List_Seq:
 
     def delete_last(self):
         return self.delete_at(self, len(self) - 1)
+
+
+def find_cycle(L):
+    head = L.head
+    slow = head
+    fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            count = 1
+            curr = slow.next
+            while curr != slow:
+                count += 1
+                curr = curr.next
+            return count
+    else:
+        return 0
+
+
+lst = Linked_List_Seq()
+lst.build([1, 2, 3, 4, 5, 6])
+
+
+last_node = lst.head.later_node(len(lst) - 1)
+loop_start_node = lst.head.later_node(0)
+last_node.next = loop_start_node
+length = find_cycle(lst)
+print("length", length)
