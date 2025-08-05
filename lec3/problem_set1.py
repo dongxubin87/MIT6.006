@@ -155,24 +155,34 @@ class Doubly_Linked_List:
         return deleted_node.item
 
     def remove(self, x1, x2):
-        if x1 is self.head and x2 is self.tail:
-            self.head = None
-            self.tail = None
-        elif x1 is self.head:
-            self.head = x2.next
-            x2.next.prev = None
-        elif x1 is not self.head and x2 is not self.tail:
+        if x1.prev:
             x1.prev.next = x2.next
-            x2.next.prev = x1.prev.next
         else:
-            x1.prev.next = None
-            self.tail = x1.prev.next
+            self.head = x2.next
 
+        if x2.next:
+            x2.next.prev = x1.prev
+        else:
+            self.tail = x1.prev
+
+        x1.prev = None
+        x2.next = None
         new_list = Doubly_Linked_List()
         new_list.head = x1
-        x1.prev = None
         new_list.tail = x2
-        x2.next = None
         return new_list
-    def splice(self,other,x):
-        
+
+    def splice(self, other, x):
+        if other.head is None:
+            return
+        x_next = x.next
+        x.next = other.head
+        other.head.prev = x
+
+        if x_next:
+            other.tail.next = x_next
+            x_next.prev = other.tail
+        else:
+            self.tail = other.tail
+        other.head = None
+        other.tail = None
