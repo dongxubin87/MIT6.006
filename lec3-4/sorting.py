@@ -93,10 +93,10 @@ def merge_sort(A, a=0, b=None):
         a += 1
 
 
-lst = [2, 3, 4, 4, 1, 5, 7]
-# selection_sort_last(lst)
+lst = [2, 3, 4, 4, 1, 5, 7, 3, 4, 6]
+selection_sort_last(lst)
 # selection_recursion(lst)
 # selection_sort_first(lst)
 # insertion_sort(lst)
-merge_sort(lst)
+# merge_sort(lst)
 print(lst)
